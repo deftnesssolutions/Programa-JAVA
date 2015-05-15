@@ -22,6 +22,21 @@ public class Produto
 	private Date dataCadastro;
 	private Integer estoque;
 	private Double valor;
+	
+	public Produto() {
+	
+	}
+
+	public Produto(String unidade, String descricao, Date dataCadastro,
+			Integer estoque, Double valor) {
+		super();
+		this.unidade = unidade;
+		this.descricao = descricao;
+		this.dataCadastro = dataCadastro;
+		this.estoque = estoque;
+		this.valor = valor;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
