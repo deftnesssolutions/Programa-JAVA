@@ -3,10 +3,13 @@ package modelo;
 import static org.junit.Assert.*;
 
 import java.util.Date;
+import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -68,15 +71,65 @@ public class ProdutoTest
 		sessao.save(p5);
 	}
 	
+	@After
+	public void limparTabelaProdutoTest()
+	{
+		Criteria lista = sessao.createCriteria(Produto.class);
+		@SuppressWarnings("unchecked")
+		List<Produto> produtos = lista.list();
+		for(Produto produto : produtos)
+		{
+			sessao.delete(produto);
+		}
+	}
+	
 	@Test
 	public void salvarProdutoTest()
 	{
-		String sql="FROM produto p WHERE p.descricao LIKE: descricao ";
-		Query consulta = sessao.createQuery(sql);
-		consulta.setString("descricao", "%Re%");
+		Query consulta = pesquisar("Regua");
 		
 		Produto produtoPesquisado = (Produto) consulta.uniqueResult();
 		assertEquals("Lote2", produtoPesquisado.getUnidade());
 	}
 	
+	@Test
+	public void listarProdutoTest()
+	{
+		Criteria lista = sessao.createCriteria(Produto.class);
+		@SuppressWarnings("unchecked")
+		List<Produto> produtos = lista.list();
+		assertEquals(5, produtos.size());
+	}
+	
+	@Test
+	public void excluirProdutoTest()
+	{
+		Query consulta = pesquisar("Papel");
+		
+		Produto produtoDeletar = (Produto) consulta.uniqueResult();
+		sessao.delete(produtoDeletar);
+		
+		produtoDeletar = (Produto) consulta.uniqueResult();
+		assertNull(produtoDeletar);
+	}
+	
+	@Test
+	public void alteracaoProdutoTest()
+	{
+		Query consulta = pesquisar("Livro");
+		
+		Produto produtoAlterar = (Produto) consulta.uniqueResult();
+		produtoAlterar.setEstoque(100);
+		sessao.update(produtoAlterar);
+		
+		produtoAlterar = (Produto) consulta.uniqueResult();
+		assertEquals(100, produtoAlterar.getEstoque().intValue());
+	}
+
+	private Query pesquisar(String parametro) {
+		String sql="FROM Produto p WHERE p.descricao LIKE :descricao ";
+		Query consulta = sessao.createQuery(sql);
+		consulta.setString("descricao", "%"+parametro+"%");
+		return consulta;
+	}
 }
