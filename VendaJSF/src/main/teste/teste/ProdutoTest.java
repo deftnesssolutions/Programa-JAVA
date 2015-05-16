@@ -1,9 +1,11 @@
-package modelo;
+package teste;
 
 import static org.junit.Assert.*;
 
 import java.util.Date;
 import java.util.List;
+
+import modelo.Produto;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
