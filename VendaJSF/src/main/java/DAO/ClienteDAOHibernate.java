@@ -1,7 +1,8 @@
 package DAO;
 
+import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
-
 import modelo.Cliente;
 
 public class ClienteDAOHibernate implements ClienteDAO {
@@ -18,6 +19,12 @@ public class ClienteDAOHibernate implements ClienteDAO {
 	@Override
 	public void salvar(Cliente cliente) {
 		this.session.save(cliente);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Cliente> listar() {
+		Criteria lista = session.createCriteria(Cliente.class);
+		return lista.list();
 	}
 
 }
