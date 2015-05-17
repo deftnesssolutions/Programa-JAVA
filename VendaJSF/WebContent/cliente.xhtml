@@ -8,24 +8,27 @@
 			<ui:define name="pageTitle">Cliente</ui:define>
 			<ui:define name="pageHeader">Cadastro de Clientes</ui:define>
 			<ui:define name="body">
+			
 				<h:form id="frmCliente">
 					<h:messages />
-					<h:panelGrid columns="2">
-						<h:outputLabel value="Nome:" />
-						<h:inputText value="#{clienteBean.clienteSelecionado.nome}" />
-						<h:outputLabel value="CPF:" />
-						<h:inputText value="#{clienteBean.clienteSelecionado.cpf}">
-							<f:validator validatorId="cpf"></f:validator>
-						</h:inputText>
-						<h:outputLabel value="Endereço:" />
-						<h:inputText value="#{clienteBean.clienteSelecionado.endereco}" />
-						<h:outputLabel value="E-Mail:" />
-						<h:inputText value="#{clienteBean.clienteSelecionado.email}" />
-						<h:outputLabel value="Renda:" />
-						<h:inputText value="#{clienteBean.clienteSelecionado.renda}">
-							<f:convertNumber minFractionDigits="2"/>
-						</h:inputText>
-					</h:panelGrid>
+					
+						<h:panelGrid columns="2">
+							<h:outputLabel value="Nome:" />
+							<h:inputText value="#{clienteBean.clienteSelecionado.nome}" />
+							<h:outputLabel value="CPF:" />
+							<h:inputText value="#{clienteBean.clienteSelecionado.cpf}">
+								<f:validator validatorId="cpf"></f:validator>
+							</h:inputText>
+							<h:outputLabel value="Endereço:" />
+							<h:inputText value="#{clienteBean.clienteSelecionado.endereco}" />
+							<h:outputLabel value="E-Mail:" />
+							<h:inputText value="#{clienteBean.clienteSelecionado.email}" />
+							<h:outputLabel value="Renda:" />
+							<h:inputText value="#{clienteBean.clienteSelecionado.renda}">
+								<f:convertNumber minFractionDigits="2"/>
+							</h:inputText>
+						</h:panelGrid>
+					
 					<h:commandButton action="#{clienteBean.salvar}" value="Salvar" />
 				</h:form>
 				<h:form id="lista">
@@ -48,7 +51,7 @@
 							
 						</h:column>
 						<h:column>
-							<f:facet name="header">Enereço</f:facet>
+							<f:facet name="header">Endereço</f:facet>
 							#{cliente.endereco}
 						</h:column>
 						<h:column>
