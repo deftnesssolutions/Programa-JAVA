@@ -64,6 +64,6 @@ public class ClienteTest {
 	{
 		ClienteRN clienteRN = new ClienteRN();
 		List<Cliente> lista= clienteRN.listar();
-		assertEquals(1, lista.size());
+		assertEquals(4, lista.size());
 	}
 }
