@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+	<ui:composition template="/templates/template.xhtml">
+			<ui:define name="pageTitle">Cliente</ui:define>
+			<ui:define name="pageHeader">Cadastro de Clientes</ui:define>
+			<ui:define name="body">
+				<h:form id="frmCliente">
+					<h:messages />
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Nome:" />
+						<h:inputText value="#{clienteBean.clienteSelecionado.nome}" />
+						<h:outputLabel value="CPF:" />
+						<h:inputText value="#{clienteBean.clienteSelecionado.cpf}">
+							<f:validator validatorId="cpf"></f:validator>
+						</h:inputText>
+						<h:outputLabel value="Endereço:" />
+						<h:inputText value="#{clienteBean.clienteSelecionado.endereco}" />
+						<h:outputLabel value="E-Mail:" />
+						<h:inputText value="#{clienteBean.clienteSelecionado.email}" />
+						<h:outputLabel value="Renda:" />
+						<h:inputText value="#{clienteBean.clienteSelecionado.renda}">
+							<f:convertNumber minFractionDigits="2"/>
+						</h:inputText>
+					</h:panelGrid>
+					<h:commandButton action="#{clienteBean.salvar}" value="Salvar" />
+				</h:form>
+				<h:form id="lista">
+					<h:dataTable value="#{clienteBean.lista}" var="cliente" border="1">
+						<f:facet name="header">Listagem de Cliente</f:facet>
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+							#{cliente.nome}
+						</h:column>
+						<h:column>
+							<f:facet name="header">CPF</f:facet>
+							#{cliente.cpf}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Data Cadastro</f:facet>
+							<h:outputText value="#{cliente.dataCadastro}">
+								<f:convertDateTime dateStyle="medium"/>
+								
+							</h:outputText>
+							
+						</h:column>
+						<h:column>
+							<f:facet name="header">Enereço</f:facet>
+							#{cliente.endereco}
+						</h:column>
+						<h:column>
+							<f:facet name="header">E-Mail</f:facet>
+							#{cliente.email}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Renda</f:facet>
+							<h:outputText value="#{cliente.renda}">
+								<f:convertNumber currencyCode="BRL" type="currency"/>
+							</h:outputText>
+						</h:column>
+					</h:dataTable>
+				</h:form>
+			</ui:define>
+	</ui:composition>
+
+</html>
