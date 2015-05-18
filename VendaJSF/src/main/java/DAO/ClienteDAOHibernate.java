@@ -41,7 +41,8 @@ public class ClienteDAOHibernate implements ClienteDAO {
 	}
 	@Override
 	public void alterar(Cliente cliente) {
-		this.session.update(cliente);
+		//this.session.update(cliente);
+		this.session.merge(cliente);
 	}
 	
 
