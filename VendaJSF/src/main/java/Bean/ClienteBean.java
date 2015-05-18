@@ -1,6 +1,5 @@
 package Bean;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +26,7 @@ public class ClienteBean
 		FacesMessage msg= new FacesMessage("Cliente cadastrado com sucesso !!");
 		FacesContext contexto = FacesContext.getCurrentInstance();
 		contexto.addMessage(null, msg);
+		this.lista = null;
 	}
 
 	public Cliente getClienteSelecionado() {
@@ -44,5 +44,12 @@ public class ClienteBean
 			lista=clienteRN.listar();
 		}
 		return lista;
+	}
+	
+	public void excluir()
+	{
+		ClienteRN clienteRN = new ClienteRN();
+		clienteRN.excluir(this.clienteSelecionado);
+		this.lista = null;
 	}
 }

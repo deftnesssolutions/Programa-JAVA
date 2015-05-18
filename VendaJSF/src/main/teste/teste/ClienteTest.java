@@ -102,4 +102,25 @@ public class ClienteTest {
 		lista = clienteRN.listar();
 		assertEquals(2, lista.size());
 	}
+	
+	@Test
+	public void pesquisarTest()
+	{
+		ClienteRN clienteRN = new ClienteRN();
+		Cliente clientePesquisado = clienteRN.pesquisar("Teste1");
+		assertEquals("teste1@gmail.com", clientePesquisado.getEmail());
+	}
+	
+	@Test
+	public void alterarTest()
+	{
+		ClienteRN clienteRN = new ClienteRN();
+		Cliente clientePesquisado = clienteRN.pesquisar("Teste1");
+		assertEquals("teste1@gmail.com", clientePesquisado.getEmail());
+		
+		clientePesquisado.setEndereco("novo endereço");
+		clienteRN.alterar(clientePesquisado);
+		Cliente clienteAlterado = clienteRN.pesquisar("Teste1");
+		assertEquals("novo endereço", clientePesquisado.getEndereco());
+	}
 }

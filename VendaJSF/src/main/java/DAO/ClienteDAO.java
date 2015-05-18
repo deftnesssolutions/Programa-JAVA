@@ -12,5 +12,9 @@ public interface ClienteDAO
 
 	public void excluir(Cliente cliente);
 
+	public Cliente pesquisar(String string);
+
+	public void alterar(Cliente cliente);
+
 	
 }
