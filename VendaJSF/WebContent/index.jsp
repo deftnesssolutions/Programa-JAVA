@@ -1,1 +1,1 @@
-<meta http-equiv="Refresh" content="0; URL=cliente.jsf">
+<meta http-equiv="Refresh" content="0; URL=produto.jsf">

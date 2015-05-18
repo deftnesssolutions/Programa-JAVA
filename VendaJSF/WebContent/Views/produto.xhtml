@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+	<ui:composition template="/templates/template.xhtml">
+			<ui:define name="pageTitle">Produto</ui:define>
+			<ui:define name="pageHeader">Cadastro de Produto</ui:define>
+			<ui:define name="body">
+				<h:form id="frmProduto">
+					<h:messages style="color:green;" />
+					<h:inputHidden value="#{produtoBean.produtoSelecionado.id}"/>
+					
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Descrição:" />
+						<h:inputText value="#{produtoBean.produtoSelecionado.descricao}" />
+						<h:outputLabel value="Unidade:" />
+						<h:inputText value="#{produtoBean.produtoSelecionado.unidade}"/>
+						<h:outputLabel value="Estoque:" />
+						<h:inputText value="#{produtoBean.produtoSelecionado.estoque}" />
+						<h:outputLabel value="Valor:" />
+						<h:inputText value="#{produtoBean.produtoSelecionado.valor}">
+							<f:convertNumber minFractionDigits="2"/>
+						</h:inputText>
+					</h:panelGrid>
+					<h:commandButton id="salvar" class="buttonCSS" action="#{produtoBean.salvar}" value="Salvar" />
+					<h:commandButton id="novo" class="buttonCSS" action="#{produtoBean.novo}" value="Novo Produto" />
+				</h:form>
+				<h:form id="lista">
+					<h:dataTable value="#{produtoBean.lista}" var="produto" border="1" rendered="#{not empty produtoBean.lista}">
+						<f:facet name="header">Listagem de Produto</f:facet>
+						<h:column>
+							<f:facet name="header">Descricao</f:facet>
+							#{produto.descricao}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Unidade</f:facet>
+							#{produto.unidade}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Data Cadastro</f:facet>
+							<h:outputText value="#{produto.dataCadastro}">
+								<f:convertDateTime dateStyle="medium"/>
+								
+							</h:outputText>
+							
+						</h:column>
+						<h:column>
+							<f:facet name="header">Estoque</f:facet>
+							#{produto.estoque}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Valor</f:facet>
+							<h:outputText value="#{produto.valor}">
+								<f:convertNumber currencyCode="BRL" type="currency"/>
+							</h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Ações</f:facet>
+							<h:commandLink action="#{produtoBean.excluir}" onclick="if(!confirm('Desea realmente excluir o produto #{produto.descricao}?'))return false;">
+								<h:graphicImage library="images" name="WZDELETE.BMP"/>
+								<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produtoSelecionado}" />
+							</h:commandLink>
+							<h:commandLink>
+								<h:graphicImage library="images" name="wzedit.bmp"/>
+								<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produtoSelecionado}" />
+							</h:commandLink>
+						</h:column>
+					</h:dataTable>
+				</h:form>
+			</ui:define>
+	</ui:composition>
+
+</html>
