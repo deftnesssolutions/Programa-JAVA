@@ -67,7 +67,7 @@
 						<h:column>
 							<f:facet name="header">Ações</f:facet>
 							<h:commandLink action="#{clienteBean.excluir}" onclick="if(!confirm('Desea realmente excluir o cliente #{cliente.nome}?'))return false;">
-								<h:graphicImage value="images" name="delete.png"/>
+								<h:graphicImage library="images" name="WZDELETE.BMP"/>
 								<f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.clienteSelecionado}" />
 							</h:commandLink>
 						</h:column>
