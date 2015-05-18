@@ -120,7 +120,8 @@ public class ClienteTest {
 		
 		clientePesquisado.setEndereco("novo endereço");
 		clienteRN.alterar(clientePesquisado);
+		
 		Cliente clienteAlterado = clienteRN.pesquisar("Teste1");
-		assertEquals("novo endereço", clientePesquisado.getEndereco());
+		assertEquals("novo endereço", clienteAlterado.getEndereco());
 	}
 }

@@ -1,14 +1,9 @@
 package teste;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 import java.util.Date;
 import java.util.List;
-
 import modelo.Produto;
-
-import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.After;
@@ -16,8 +11,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import util.HibernateUtil;
+import RN.ProdutoRN;
 
 public class ProdutoTest
 {
@@ -50,88 +45,86 @@ public class ProdutoTest
 		}
 	}
 	
-	public Date DataBD()
-	 {
-		 java.util.Date d1 = new java.util.Date();  
-		 java.sql.Date d2 = new java.sql.Date(d1.getTime());
-		 return d2;
-	 }
-	
 	@Before
 	public void setup()
 	{
 		Produto p1 = new Produto("Lote", "Caderno", (java.sql.Date) DataBD(), 50, 7.0);
 		Produto p2 = new Produto("Lote2", "Regua", (java.sql.Date) DataBD(), 30, 2.5);
 		Produto p3 = new Produto("Fardo", "Papel", (java.sql.Date) DataBD(), 300, 1.5);
-		Produto p4 = new Produto("Edicao", "Livro", (java.sql.Date) DataBD(), 10, 30.0);
-		Produto p5 = new Produto("Caixa", "Caneta", (java.sql.Date) DataBD(), 90, 1.5);
-		
-		sessao.save(p1);
-		sessao.save(p2);
-		sessao.save(p3);
-		sessao.save(p4);
-		sessao.save(p5);
+		ProdutoRN produtoRN = new ProdutoRN();
+		produtoRN.salvar(p1);
+		produtoRN.salvar(p2);
+		produtoRN.salvar(p3);
 	}
 	
 	@After
-	public void limparTabelaProdutoTest()
+	public void limparTabela()
 	{
-		Criteria lista = sessao.createCriteria(Produto.class);
-		@SuppressWarnings("unchecked")
-		List<Produto> produtos = lista.list();
-		for(Produto produto : produtos)
-		{
-			sessao.delete(produto);
+		ProdutoRN produtoRN = new ProdutoRN();
+		List<Produto> lista= produtoRN.listar();
+		for (Produto produto : lista) {
+			produtoRN.excluir(produto);
 		}
 	}
 	
 	@Test
-	public void salvarProdutoTest()
+	public void salvarTest()
 	{
-		Query consulta = pesquisar("Regua");
+		Produto p1= new Produto();
+		p1.setDescricao("Coca Colar lata");
+		p1.setEstoque(10);
+		p1.setUnidade("Caixa");
+		p1.setValor(20.5);
 		
-		Produto produtoPesquisado = (Produto) consulta.uniqueResult();
-		assertEquals("Lote2", produtoPesquisado.getUnidade());
+		ProdutoRN produtoRN = new ProdutoRN();
+		produtoRN.salvar(p1);
+		assertEquals(true,true);
 	}
 	
 	@Test
-	public void listarProdutoTest()
+	public void listarTest()
 	{
-		Criteria lista = sessao.createCriteria(Produto.class);
-		@SuppressWarnings("unchecked")
-		List<Produto> produtos = lista.list();
-		assertEquals(5, produtos.size());
+		ProdutoRN produtoRN = new ProdutoRN();
+		List<Produto> lista= produtoRN.listar();
+		assertEquals(3, lista.size());
 	}
 	
 	@Test
-	public void excluirProdutoTest()
+	public void excluirTest()
 	{
-		Query consulta = pesquisar("Papel");
-		
-		Produto produtoDeletar = (Produto) consulta.uniqueResult();
-		sessao.delete(produtoDeletar);
-		
-		produtoDeletar = (Produto) consulta.uniqueResult();
-		assertNull(produtoDeletar);
+		ProdutoRN produtoRN = new ProdutoRN();
+		List<Produto> lista= produtoRN.listar();
+		Produto produtoExcluido = lista.get(0);
+		produtoRN.excluir(produtoExcluido);
+		lista = produtoRN.listar();
+		assertEquals(2, lista.size());
 	}
 	
 	@Test
-	public void alteracaoProdutoTest()
+	public void pesquisarTest()
 	{
-		Query consulta = pesquisar("Livro");
-		
-		Produto produtoAlterar = (Produto) consulta.uniqueResult();
-		produtoAlterar.setEstoque(100);
-		sessao.update(produtoAlterar);
-		
-		produtoAlterar = (Produto) consulta.uniqueResult();
-		assertEquals(100, produtoAlterar.getEstoque().intValue());
+		ProdutoRN produtoRN = new ProdutoRN();
+		Produto produtoPesquisado = produtoRN.pesquisar("erno");
+		assertEquals("Lote", produtoPesquisado.getUnidade());
 	}
-
-	private Query pesquisar(String parametro) {
-		String sql="FROM Produto p WHERE p.descricao LIKE :descricao ";
-		Query consulta = sessao.createQuery(sql);
-		consulta.setString("descricao", "%"+parametro+"%");
-		return consulta;
+	
+	@Test
+	public void alterarTest()
+	{
+		ProdutoRN produtoRN = new ProdutoRN();
+		Produto produtoPesquisado = produtoRN.pesquisar("erno");
+		assertEquals("Lote", produtoPesquisado.getUnidade());
+		
+		produtoPesquisado.setEstoque(20);
+		produtoRN.alterar(produtoPesquisado);
+		Produto produtoAlterado = produtoRN.pesquisar("erno");
+		assertEquals(20, produtoAlterado.getEstoque().intValue());
 	}
+	
+	public Date DataBD()
+	 {
+		 java.util.Date d1 = new java.util.Date();  
+		 java.sql.Date d2 = new java.sql.Date(d1.getTime());
+		 return d2;
+	 }
 }
