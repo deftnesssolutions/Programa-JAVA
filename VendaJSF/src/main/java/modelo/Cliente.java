@@ -24,6 +24,23 @@ public class Cliente
 	private String nome;
 	private Float renda;
 	
+	public Cliente()
+	{
+		
+	}
+	
+	public Cliente(String cpf, String email, String endereco,
+			Date dataCadastro, String nome, Float renda) {
+		super();
+		this.cpf = cpf;
+		this.email = email;
+		this.endereco = endereco;
+		this.dataCadastro = dataCadastro;
+		this.nome = nome;
+		this.renda = renda;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}

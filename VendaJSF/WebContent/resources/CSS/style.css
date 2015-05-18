@@ -219,8 +219,8 @@ h1
     left: 50%;
     margin-left: -512px;
     background-color: White;
-    min-height: 450px; 
-    max-height: 450px;
+    min-height: 490px; 
+    max-height: 490px;
     z-index: 1;
     margin-bottom: 110px;
 } 
@@ -247,9 +247,12 @@ h1
 {
     background-color: #006cac;
 	color: #ffffff;
-	line-height: 20px;
+	/*line-height: 20px;
 	margin: 0 auto;
-	padding: 20px 10px;
+	padding: 20px 10px;*/
+	height: 100px;
+	width: 100%;
+	position: absolute;
 }
 
 #footer ul.contacts {
@@ -340,8 +343,8 @@ h1
 }
 
 /* main nav menu */
-.header_menu { background:#006cac; height:42px;}
-.header_menu_res{margin:0 auto; width:540px; padding:7px 0;}
+.header_menu { background:#000040; height:42px;}
+.header_menu_res{margin:0 auto; width:1024px; padding:7px 0;}
 .header_menu_res .obtn{float:right; font-size:16px; padding:4px 40px; }
 #nav, #nav ul, #nav ul ul { float:left; margin:0; padding:0; list-style:none;}
 #nav li.first { padding-left:0; background:none;}

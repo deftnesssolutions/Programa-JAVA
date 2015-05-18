@@ -2,11 +2,14 @@ package teste;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -45,6 +48,28 @@ public class ClienteTest {
 		}
 	}
 	
+	@Before
+	public void setup()
+	{
+		Cliente c1 = new Cliente("10546817327", "teste1@gmail.com", "rua teste", new Date(), "Teste1", 2000f);
+		Cliente c2 = new Cliente("75038401104", "teste2@gmail.com", "rua teste2", new Date(), "Teste2", 1000f);
+		Cliente c3 = new Cliente("56309473700", "teste3@gmail.com", "rua teste3", new Date(), "Teste3", 3000f);
+		ClienteRN clienteRN = new ClienteRN();
+		clienteRN.salvar(c1);
+		clienteRN.salvar(c2);
+		clienteRN.salvar(c3);
+	}
+	
+	@After
+	public void limparTabela()
+	{
+		ClienteRN clienteRN = new ClienteRN();
+		List<Cliente> lista= clienteRN.listar();
+		for (Cliente cliente : lista) {
+			clienteRN.excluir(cliente);
+		}
+	}
+	
 	@Test
 	public void salvarTest()
 	{
@@ -64,6 +89,17 @@ public class ClienteTest {
 	{
 		ClienteRN clienteRN = new ClienteRN();
 		List<Cliente> lista= clienteRN.listar();
-		assertEquals(4, lista.size());
+		assertEquals(3, lista.size());
+	}
+	
+	@Test
+	public void excluirTest()
+	{
+		ClienteRN clienteRN = new ClienteRN();
+		List<Cliente> lista= clienteRN.listar();
+		Cliente clienteExcluido = lista.get(0);
+		clienteRN.excluir(clienteExcluido);
+		lista = clienteRN.listar();
+		assertEquals(2, lista.size());
 	}
 }
