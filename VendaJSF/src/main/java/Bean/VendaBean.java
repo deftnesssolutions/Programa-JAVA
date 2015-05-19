@@ -59,6 +59,7 @@ public class VendaBean
 	public List<SelectItem> getCboClientes() {
 		if(this.cboClientes==null)
 		{
+			//cboClientes=new ArrayList<SelectItem>();
 			ClienteRN clienteRN = new ClienteRN();
 			List<Cliente> listaClientes = clienteRN.listar();
 			
@@ -67,7 +68,7 @@ public class VendaBean
 				SelectItem item;
 				for (Cliente c : listaClientes)
 				{
-					item=new SelectItem(c, c.getNome());
+					item = new SelectItem(c, c.getNome());
 					cboClientes.add(item);
 				}
 			}

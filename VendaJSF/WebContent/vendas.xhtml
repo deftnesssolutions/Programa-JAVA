@@ -3,15 +3,20 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
-
-	<!-- 
-		Replace path to template, title, header and body
-		with actual data.
-	 -->
+      
 	<ui:composition template="/templates/template.xhtml">
 			<ui:define name="pageTitle">Vendas</ui:define>
 			<ui:define name="pageHeader">Registro de Venda</ui:define>
 			<ui:define name="body">
+			
+				<h:form>
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Cliente: " />
+						<h:selectOneMenu value="#{vendaBean.clienteSelecionado}">
+							<f:selectItem value="#{vendaBean.cboClientes}" />
+						</h:selectOneMenu>
+					</h:panelGrid>
+				</h:form>
 				
 			</ui:define>
 	</ui:composition>
