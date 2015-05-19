@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
 
+import RN.ClienteRN;
 import RN.ProdutoRN;
 import modelo.Cliente;
 import modelo.Produto;
@@ -17,6 +19,9 @@ public class VendaBean
 	private Cliente clienteSelecionado;
 	private Produto produtoSelecionado = new Produto();
 	private Double valorTotal;
+	private List<SelectItem> cboClientes;
+	
+
 	List<Produto> carrinhoCompra = new ArrayList<Produto>();
 	
 	public Cliente getClienteSelecionado() {
@@ -49,6 +54,27 @@ public class VendaBean
 
 	public void setCarrinhoCompra(List<Produto> carrinhoCompra) {
 		this.carrinhoCompra = carrinhoCompra;
+	}
+	
+	public List<SelectItem> getCboClientes() {
+		if(this.cboClientes==null)
+		{
+			ClienteRN clienteRN = new ClienteRN();
+			List<Cliente> listaClientes = clienteRN.listar();
+			
+			if(listaClientes !=null && !listaClientes.isEmpty())
+			{
+				SelectItem item;
+				for (Cliente c : listaClientes)
+				{
+					item=new SelectItem(c, c.getNome());
+					cboClientes.add(item);
+				}
+			}
+		}
+		
+		
+		return cboClientes;
 	}
 
 	 public void buscarProduto()
