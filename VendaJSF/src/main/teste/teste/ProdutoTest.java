@@ -4,46 +4,13 @@ import static org.junit.Assert.assertEquals;
 import java.util.Date;
 import java.util.List;
 import modelo.Produto;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import util.HibernateUtil;
 import RN.ProdutoRN;
 
-public class ProdutoTest
+public class ProdutoTest extends TestAbstract
 {
-	private static  Session sessao;
-	private static Transaction transacao;
-	
-	@BeforeClass
-	public static void abreConexao()
-	{
-		sessao=HibernateUtil.getSession().getCurrentSession();
-		transacao = sessao.beginTransaction();
-	}
-	
-	@AfterClass
-	public static void fechaConexao()
-	{
-		
-		try {
-			transacao.commit();
-		} catch (Throwable e) {
-			System.out.println("deu problema no commit: " + e.getMessage());
-		}finally
-		{
-			try {
-				if(sessao.isOpen())
-					sessao.close();
-			} catch (Exception e2) {
-				System.out.println("deu erro no fechamento da sessão: " + e2.getMessage());
-			}
-		}
-	}
 	
 	@Before
 	public void setup()
@@ -121,10 +88,5 @@ public class ProdutoTest
 		assertEquals(20, produtoAlterado.getEstoque().intValue());
 	}
 	
-	public Date DataBD()
-	 {
-		 java.util.Date d1 = new java.util.Date();  
-		 java.sql.Date d2 = new java.sql.Date(d1.getTime());
-		 return d2;
-	 }
+	
 }
