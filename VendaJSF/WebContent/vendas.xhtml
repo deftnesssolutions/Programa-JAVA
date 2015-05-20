@@ -13,7 +13,8 @@
 					<h:panelGrid columns="2">
 						<h:outputLabel value="Cliente: " />
 						<h:selectOneMenu value="#{vendaBean.clienteSelecionado}">
-							<f:selectItem value="#{vendaBean.cboClientes}" />
+							<f:selectItem itemLabel="Selecione um Cliente"/>
+							<f:selectItems value="#{vendaBean.cboClientes}"/>
 						</h:selectOneMenu>
 					</h:panelGrid>
 				</h:form>

@@ -57,9 +57,10 @@ public class VendaBean
 	}
 	
 	public List<SelectItem> getCboClientes() {
+		
 		if(this.cboClientes==null)
 		{
-			//cboClientes=new ArrayList<SelectItem>();
+			this.cboClientes = new ArrayList<SelectItem>();
 			ClienteRN clienteRN = new ClienteRN();
 			List<Cliente> listaClientes = clienteRN.listar();
 			
@@ -69,11 +70,10 @@ public class VendaBean
 				for (Cliente c : listaClientes)
 				{
 					item = new SelectItem(c, c.getNome());
-					cboClientes.add(item);
+					this.cboClientes.add(item);
 				}
 			}
 		}
-		
 		
 		return cboClientes;
 	}
