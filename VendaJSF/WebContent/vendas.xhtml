@@ -9,13 +9,14 @@
 			<ui:define name="pageHeader">Registro de Venda</ui:define>
 			<ui:define name="body">
 			
-				<h:form>
+				<h:form id="idBuscaProduto">
 					<h:panelGrid columns="2">
 					
 						<h:outputLabel value="Cliente: " />
 						<h:selectOneMenu value="#{vendaBean.clienteSelecionado}">
 							<f:selectItem itemLabel="Selecione um Cliente"/>
 							<f:selectItems value="#{vendaBean.cboClientes}"/>
+							<f:ajax event="change" render="idClienteSelecionado"/>
 						</h:selectOneMenu>
 						
 						<h:outputLabel value="Produto: " />
@@ -23,9 +24,30 @@
 							<h:inputText value="#{vendaBean.produtoSelecionado.descricao}" />
 							<h:commandButton action="#{vendaBean.buscarProduto}" value="Pesquisar" />
 						</h:panelGroup>
+						
+						<h:outputLabel value="Id de Cliente: " />
+						<h:outputText id="idClienteSelecionado" value="#{vendaBean.clienteSelecionado.id}" />
 					</h:panelGrid>
 				</h:form>
-				
+				<h:form id="lista">
+					<h:dataTable value="#{vendaBean.carrinhoCompra}" var="produto" border="1" rendered="#{not empty vendaBean.carrinhoCompra}"> 
+						<f:facet name="header">Listagem de carrinho de compras</f:facet>
+						<h:column>
+							<f:facet name="header">Descrição</f:facet>
+							#{produto.descricao}
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">Ações</f:facet>
+							<h:commandLink action="#{vendaBean.excluirProdutoCarrinho}" onclick="if(!confirm('Desea realmente excluir o produto #{produto.descricao} do carrinho?'))return false;">
+								<h:graphicImage library="images" name="WZDELETE.BMP"/>
+								<f:setPropertyActionListener value="#{produto}" target="#{vendaBean.produtoSelecionado}" />
+							</h:commandLink>
+						</h:column>
+						
+					</h:dataTable>
+				</h:form>
+				 
 			</ui:define>
 	</ui:composition>
 

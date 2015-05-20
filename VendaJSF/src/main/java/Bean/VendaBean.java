@@ -99,9 +99,21 @@ public class VendaBean
 		if(!this.carrinhoCompra.isEmpty())
 		{
 			for (Produto p : this.carrinhoCompra) {
-				valorTotal += p.getValor();
+				valorTotal =+ p.getValor();
 			}
 		}
 		
+	}
+	
+	public String excluirProdutoCarrinho()
+	{
+		if(this.carrinhoCompra != null && !this.carrinhoCompra.isEmpty())
+		{
+			if(this.produtoSelecionado != null)
+			{
+				this.carrinhoCompra.remove(produtoSelecionado);
+			}
+		}
+		return null;
 	}
 }
