@@ -22,19 +22,25 @@
 						<h:outputLabel value="Produto: " />
 						<h:panelGroup>
 							<h:inputText value="#{vendaBean.produtoSelecionado.descricao}" />
-							<h:commandButton action="#{vendaBean.buscarProduto}" value="Pesquisar" />
+							<h:commandButton class="buttonCSS" action="#{vendaBean.buscarProduto}" value="Pesquisar">
+								<f:ajax onevent="click" render="idValorTotal"/>
+							</h:commandButton>
 						</h:panelGroup>
 						
 						<h:outputLabel value="Id de Cliente: " />
 						<h:outputText id="idClienteSelecionado" value="#{vendaBean.clienteSelecionado.id}" />
 					</h:panelGrid>
-				</h:form>
-				<h:form id="lista">
+					
 					<h:dataTable value="#{vendaBean.carrinhoCompra}" var="produto" border="1" rendered="#{not empty vendaBean.carrinhoCompra}"> 
 						<f:facet name="header">Listagem de carrinho de compras</f:facet>
 						<h:column>
 							<f:facet name="header">Descrição</f:facet>
 							#{produto.descricao}
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">Valor</f:facet>
+							#{produto.valor}
 						</h:column>
 						
 						<h:column>
@@ -46,8 +52,15 @@
 						</h:column>
 						
 					</h:dataTable>
+					
+					<h:outputLabel value="Sub Total: " />
+					<h:outputText id="idValorTotal" value="#{vendaBean.valorTotal}">
+						<f:convertNumber currencyCode="BRL" type="currency"/>
+					</h:outputText>
+					
+					<h:commandButton class="buttonCSS" action="#{vendaBean.finalizarVenda}" value="Finalizar Venda" />
 				</h:form>
-				 
+				
 			</ui:define>
 	</ui:composition>
 

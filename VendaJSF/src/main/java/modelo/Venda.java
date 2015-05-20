@@ -30,6 +30,15 @@ public class Venda
 	@Column(name="data_venda")
 	private Date dataVenda;
 
+	public Venda(Produto produto, Cliente cliente) {
+		this.cliente = cliente;
+		this.produto = produto;
+	}
+
+	public Venda() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Integer getId() {
 		return id;
 	}

@@ -1,5 +1,7 @@
 package util;
 
+import java.util.Date;
+
 import DAO.ClienteDAO;
 import DAO.ClienteDAOHibernate;
 import DAO.ProdutoDAO;
@@ -27,4 +29,11 @@ public class DAOFactory
 		vendaDAOHibernate.setSession(HibernateUtil.getSession().getCurrentSession());
 		return vendaDAOHibernate;
 	}
+	
+	public static Date DataBD()
+	 {
+		 java.util.Date d1 = new java.util.Date();  
+		 java.sql.Date d2 = new java.sql.Date(d1.getTime());
+		 return d2;
+	 }
 }

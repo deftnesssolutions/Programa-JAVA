@@ -1,16 +1,19 @@
 package Bean;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
+import util.DAOFactory;
 import RN.ClienteRN;
 import RN.ProdutoRN;
+import RN.VendaRN;
 import modelo.Cliente;
 import modelo.Produto;
+import modelo.Venda;
 
 @ManagedBean(name="vendaBean")
 @ViewScoped
@@ -96,10 +99,11 @@ public class VendaBean
 	 }
 
 	private void calculaTotal() {
+		valorTotal = 0.0;
 		if(!this.carrinhoCompra.isEmpty())
 		{
 			for (Produto p : this.carrinhoCompra) {
-				valorTotal =+ p.getValor();
+				valorTotal += p.getValor();
 			}
 		}
 		
@@ -112,6 +116,29 @@ public class VendaBean
 			if(this.produtoSelecionado != null)
 			{
 				this.carrinhoCompra.remove(produtoSelecionado);
+				calculaTotal();
+			}
+		}
+		return null;
+	}
+	
+	public String finalizarVenda()
+	{
+		if(!this.carrinhoCompra.isEmpty())
+		{
+			ArrayList<Venda> vendas = new ArrayList<Venda>();
+			
+			for (Produto p : this.carrinhoCompra) {
+				if(this.clienteSelecionado != null)
+				{
+					vendas.add(new Venda(p,this.clienteSelecionado));
+				}
+			}
+			
+			for (Venda venda : vendas) {
+				VendaRN vendaRN = new VendaRN();
+				venda.setDataVenda((Date) DAOFactory.DataBD());
+				vendaRN.registraVenda(venda);
 			}
 		}
 		return null;
