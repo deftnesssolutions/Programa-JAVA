@@ -1,7 +1,6 @@
 package teste;
 
 import static org.junit.Assert.assertEquals;
-import java.util.Date;
 import java.util.List;
 import modelo.Produto;
 import org.junit.After;

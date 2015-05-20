@@ -16,5 +16,7 @@ public interface ClienteDAO
 
 	public void alterar(Cliente cliente);
 
+	public Cliente pesquisaPorCodigo(Integer codigo);
+
 	
 }

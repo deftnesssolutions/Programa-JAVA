@@ -78,7 +78,7 @@ public class VendaBean
 		return cboClientes;
 	}
 
-	 public void buscarProduto()
+	 public String buscarProduto()
 	 {
 		 ProdutoRN produtoRN = new ProdutoRN();
 		 Produto produtoPesquisado = new Produto();
@@ -92,7 +92,7 @@ public class VendaBean
 			 this.carrinhoCompra.add(produtoPesquisado);
 			 calculaTotal();
 		 }
-		 
+		 return null;
 	 }
 
 	private void calculaTotal() {

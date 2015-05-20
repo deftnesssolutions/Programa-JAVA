@@ -11,11 +11,18 @@
 			
 				<h:form>
 					<h:panelGrid columns="2">
+					
 						<h:outputLabel value="Cliente: " />
 						<h:selectOneMenu value="#{vendaBean.clienteSelecionado}">
 							<f:selectItem itemLabel="Selecione um Cliente"/>
 							<f:selectItems value="#{vendaBean.cboClientes}"/>
 						</h:selectOneMenu>
+						
+						<h:outputLabel value="Produto: " />
+						<h:panelGroup>
+							<h:inputText value="#{vendaBean.produtoSelecionado.descricao}" />
+							<h:commandButton action="#{vendaBean.buscarProduto}" value="Pesquisar" />
+						</h:panelGroup>
 					</h:panelGrid>
 				</h:form>
 				
