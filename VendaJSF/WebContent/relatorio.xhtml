@@ -12,9 +12,7 @@
 			<ui:define name="pageTitle">Relatorio</ui:define>
 			<ui:define name="pageHeader">Relatorio de Vendas</ui:define>
 			<ui:define name="body">
-			
 				<h:form id="frmRelatorio">
-				
 					<h:panelGrid columns="2">
 						<h:outputLabel value="Cliente: " />
 						<h:selectOneMenu value="#{relatorioBean.clienteSelecionado}">
@@ -22,7 +20,6 @@
 							<f:selectItems value="#{relatorioBean.cboClientes}"/>
 						</h:selectOneMenu>
 					</h:panelGrid>
-					
 					<h:panelGrid columns="">
 						<h:commandButton class="buttonCSS" action="#{relatorioBean.geraRelatio}" value="Gerar Relatorio" />
 					</h:panelGrid>	
