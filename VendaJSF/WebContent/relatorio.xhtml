@@ -21,7 +21,7 @@
 						</h:selectOneMenu>
 					</h:panelGrid>
 					<h:panelGrid columns="">
-						<h:commandButton class="buttonCSS" action="#{relatorioBean.geraRelatio}" value="Gerar Relatorio" />
+						<h:commandButton class="buttonCSS" actionListener="#{relatorioBean.geraRelatio}" value="Gerar Relatorio" />
 					</h:panelGrid>	
 				</h:form>
 			</ui:define>

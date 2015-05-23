@@ -16,13 +16,19 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import com.lowagie.text.pdf.codec.Base64.InputStream;
+
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import modelo.Cliente;
+import modelo.RelatorioVenda;
+import modelo.Venda;
 import RN.ClienteRN;
+import RN.VendaRN;
 @ManagedBean(name="relatorioBean")
 @ViewScoped
 public class RelatorioBean {
@@ -52,69 +58,37 @@ public class RelatorioBean {
 			return cboClientes;
 	}
 	
-	
-	@SuppressWarnings("unchecked")
-	public String geraRelatio()throws IOException 
+	public void geraRelatio() throws JRException, IOException 
 	{
-		/*
-		//VendaRN vendaRN = new VendaRN();
-		//List<Venda> vendaAll = vendaRN.listar();
-		//ArrayList<Venda> vendasPorCliente = new ArrayList<Venda>();
-		 try {  
-	            System.out.println("entrou no visualizar relatorio");  
-	            if (this.clienteSelecionado == null) {  
-	                return null;  
-	            }  
-	            //---------- gera o relatorio ----------  
-	            @SuppressWarnings("rawtypes")
-				Map parametros = new HashMap();  
-	            parametros.put("idCliente", this.clienteSelecionado.getId());  
-	            Collection<String> c = new ArrayList<String>();    
-	            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(c);
-	            JasperPrint jasperPrint = JasperFillManager.fillReport(getClass().getResourceAsStream("/Relatorios/frmVendas.jasper"), parametros, dataSource);  
-	            byte[] b = JasperExportManager.exportReportToPdf(jasperPrint);   	  
-	            HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();  
-	            res.setContentType("application/pdf");  
-	            //Código abaixo gerar o relatório e disponibiliza diretamente na página   
-	            res.setHeader("Content-disposition", "inline;filename=frmVendas.pdf");  
-	            //Código abaixo gerar o relatório e disponibiliza para o cliente baixar ou salvar   
-	            //res.setHeader("Content-disposition", "attachment;filename=arquivo.pdf");  
-	            res.getOutputStream().write(b);  
-	            res.getCharacterEncoding();  
-	            FacesContext.getCurrentInstance().responseComplete();  
-	            System.out.println("saiu do visualizar relatorio");  
-	        } catch (Exception ex) {  
-	            ex.printStackTrace();  
-	        }  
-		*/
+		VendaRN vendaRN = new VendaRN();
+		List<Venda> vendaAll = vendaRN.listar();
+		 ArrayList<RelatorioVenda> vendasReportModel = new ArrayList<RelatorioVenda>();
+		for (Venda venda : vendaAll) {
+			 RelatorioVenda vendaPorCliente = new RelatorioVenda();
+			 if(venda.getCliente().getId()==this.clienteSelecionado.getId())
+			 {
+				 vendaPorCliente.setCliente_nome(this.clienteSelecionado.getNome());
+				 vendaPorCliente.setProduto_descricao(venda.getProduto().getDescricao());
+				 vendaPorCliente.setProduto_valor(venda.getProduto().getValor());
+				 vendaPorCliente.setVenda_data_venda(venda.getDataVenda());
+				 vendasReportModel.add(vendaPorCliente);
+			 }
+		}
+
 		FacesContext fc = FacesContext.getCurrentInstance();
         ServletContext context = (ServletContext) fc.getExternalContext().getContext();
-        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         File relatorioJasper = new File(context.getRealPath("/WEB-INF/Relatorios/frmVendas.jasper"));
- 
-        // parâmetros, se houver
-        @SuppressWarnings("rawtypes")
-		Map parametros = new HashMap();
-        parametros.put("idCliente", this.clienteSelecionado.getId()); 
-        byte[] bytes = null;
- 
-        try {
- 
-            bytes = JasperRunManager.runReportToPdf(relatorioJasper.getPath(), parametros);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-        }
-        if (bytes != null && bytes.length > 0) {
-            // Envia o relatório em formato PDF para o browser
-            response.setContentType("application/pdf");
-            response.setContentLength(bytes.length);
-            ServletOutputStream ouputStream = response.getOutputStream();
-            ouputStream.write(bytes, 0, bytes.length);
-            ouputStream.flush();
-            ouputStream.close();
-        }
-		return null;
+		Map<String,Object> parametros = new HashMap<String,Object>();
+        parametros.put("idCliente", this.clienteSelecionado.getId().toString());
+        JasperPrint jasperPrint = JasperFillManager.fillReport(relatorioJasper.getPath(), parametros,new JRBeanCollectionDataSource(vendasReportModel));
+        HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();  
+        res.addHeader("Content-disposition", "inline;filename=frmVendas.pdf"); 
+        ServletOutputStream stream = res.getOutputStream();
+        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+        FacesContext.getCurrentInstance().responseComplete(); 
+        stream.flush();
+        stream.close();
+		//return null;
 	}
 	
 	
