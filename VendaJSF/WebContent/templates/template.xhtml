@@ -20,11 +20,16 @@
 		                <div class="header_menu_res">
 		                  <h:form>	
 		                    <ul id="nav">
+		                    	<li>
+		                    		<h:commandLink action="paginaInicial" style="top:-9px;left: -5px;">
+										<h:graphicImage library="images" name="Home.bmp" style="height: 35px; width: 40px;"/>
+									</h:commandLink>
+								</li>
 		                    	<li><h:commandLink action="produto" value="Cadastrar Produto" /></li>
 		                    	<li><h:commandLink action="cliente" value="Cadastrar Cliente" /></li>
 		                    	<li><h:commandLink action="vendas" value="Registrar Venda" /></li>
 		                    	<li><h:commandLink action="relatorio" value="Relatorio de Vendas" /></li>
-		   						<li><a href="#">Sobre</a></li>
+		   						<li><h:commandLink action="sobre" value="Sobre" /></li>
 		                    </ul>
 		                    <div class="clr">
 		                    </div>
@@ -36,13 +41,14 @@
 </h:head>
 <h:body>
 	  
-	 <div class="conteudo" >
-	 	<div class="conteudoHeader">
-	   		<ui:insert name="pageHeader">Page Body</ui:insert>		       		
-	 	</div>
+	 
+	 <div class="conteudoHeader">
+	 	<ui:insert name="pageHeader">Page Body</ui:insert>		       		
+	 </div>
+	 <div class="conteudo" style="background-color: transparent" >
 	 		<br />
 	    	<ui:insert name="body">Page Body</ui:insert>
-	 	</div>      	   
+	 </div>      	   
    	 <div id="footer">
    	 	
    		<div class="conteudoFooter">
